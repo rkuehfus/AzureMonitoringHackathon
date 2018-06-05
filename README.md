@@ -14,8 +14,7 @@
 
 ### 1. Attendees have access to an Azure Subscription where they can each deploy the provided ARM template that will build a very detailed infrastructure to monitor.  This includes the Vnet, subnets, NSG(s), LB(s), VMs and a functional .NET application (eShopOnWeb).
 
-### 2. Attendees should have a level 200-300 understanding of the Azure platform from an IaaS perspective.  
-Understand concepts like ARM, resource groups, RBAC, network, storage, compute, virtual machines and security.  Previous experience working with ARM templates is recommended.
+### 2. Attendees should have a level 200-300 understanding of the Azure platform from an IaaS perspective.  Understand concepts like ARM, resource groups, RBAC, network, storage, compute, virtual machines and security.  Previous experience working with ARM templates is recommended.
 
 ### 3. Access to a machine with Visual Studio Code and the Azure PowerShell Modules loaded.  VS Code ARM and PowerShell extensions should be configured.
 
