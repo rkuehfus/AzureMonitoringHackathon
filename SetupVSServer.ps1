@@ -44,7 +44,6 @@ $replace1 = '            ConfigureProductionServices(services);'
 
 #modify appsettings.json
 $SQLusername = "sqladmin"
-
 $appsettingsfile = 'C:\eshoponweb\eShopOnWeb-master\src\Web\appsettings.json'
 $find = '    "CatalogConnection": "Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.CatalogDb;",'
 $replace = '    "CatalogConnection": "Server=' + $SQLServername + ';Integrated Security=false;User ID=' + $SQLusername + ';Password=' + $SQLpassword + ';Initial Catalog=Microsoft.eShopOnWeb.CatalogDb;",'
@@ -52,3 +51,34 @@ $replace = '    "CatalogConnection": "Server=' + $SQLServername + ';Integrated S
 $find1 = '    "IdentityConnection": "Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.Identity;"'
 $replace1 = '    "IdentityConnection": "Server=' + $SQLServername + ';Integrated Security=false;User ID=' + $SQLusername + ';Password=' + $SQLpassword + ';Initial Catalog=Microsoft.eShopOnWeb.Identity;"'
 (Get-Content $appsettingsfile).replace($find1, $replace1) | Set-Content $appsettingsfile -Force
+
+#add exception to ManageController.cs
+$ManageControllerfile = 'C:\eshoponweb\eShopOnWeb-master\src\Web\Controllers\ManageController.cs'
+$Match = [regex]::Escape("public async Task<IActionResult> ChangePassword()")
+$NewLine = 'throw new ApplicationException($"Oh no!  Error!  Error! Yell at Rob!  He put this here!");'
+$Content = Get-Content $ManageControllerfile -Force
+$Index = ($content | Select-String -Pattern $Match).LineNumber + 2
+$NewContent = @()
+0..($Content.Count-1) | Foreach-Object {
+    if ($_ -eq $index) {
+        $NewContent += $NewLine
+    }
+    $NewContent += $Content[$_]
+}
+$NewContent | Out-File $ManageControllerfile -Force
+
+#Configure eShoponWeb application
+# Run dotnet with arguments
+$eShopWebDestination = "C:\eshoponweb\eShopOnWeb-master\src\Web"
+$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('restore') -WorkingDirectory $eShopWebDestination -Passthru)
+$proc | Wait-Process
+
+#Configure CatalogDb
+$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('ef','database','update','-c','catalogcontext','-p','../Infrastructure/Infrastructure.csproj','-s','Web.csproj') -WorkingDirectory $eShopWebDestination -Passthru)
+$proc | Wait-Process
+
+#Configure Identity Db
+$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('ef','database','update','-c','appidentitydbcontext','-p','../Infrastructure/Infrastructure.csproj','-s','Web.csproj') -WorkingDirectory $eShopWebDestination -Passthru)
+$proc | Wait-Process
+
+
