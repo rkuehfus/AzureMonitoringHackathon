@@ -13,6 +13,8 @@ if ((Get-Service WMSVC).Status -ne "Running") {
 }
 
 # Install Web Deploy 3.6
+$msiWebDeployTemp = [System.IO.Path]::GetTempPath().ToString() + "WebDeploy_amd64_en-US.msi"
+if (Test-Path $msiWebDeployTemp) { Remove-Item $msiWebDeployTemp -Force }
 # Download file from Microsoft Downloads and save to local temp file (%LocalAppData%/Temp/2)
 $msiFile = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName { $_ -replace 'tmp$', 'msi' } -PassThru
 Invoke-WebRequest -Uri http://download.microsoft.com/download/0/1/D/01DC28EA-638C-4A22-A57B-4CEF97755C6C/WebDeploy_amd64_en-US.msi -OutFile $msiFile
@@ -27,6 +29,8 @@ $proc | Wait-Process
 Get-Content $logFile
 
 # Install Microsoft .Net Core 2.1.0
+$exeDotNetTemp = [System.IO.Path]::GetTempPath().ToString() + "dotnet-hosting-2.1.0-win.exe"
+if (Test-Path $exeDotNetTemp) { Remove-Item $exeDotNetTemp -Force }
 # Download file from Microsoft Downloads and save to local temp file (%LocalAppData%/Temp/2)
 $exeFileNetCore = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName "dotnet-hosting-2.1.0-win.exe" -PassThru
 Invoke-WebRequest -Uri "https://download.microsoft.com/download/9/1/7/917308D9-6C92-4DA5-B4B1-B4A19451E2D2/dotnet-hosting-2.1.0-win.exe" -OutFile $exeFileNetCore
