@@ -81,4 +81,12 @@ $proc | Wait-Process
 $proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('ef','database','update','-c','appidentitydbcontext','-p','../Infrastructure/Infrastructure.csproj','-s','Web.csproj') -WorkingDirectory $eShopWebDestination -Passthru)
 $proc | Wait-Process
 
+# Build Project and publish to a folder
+# Share folder to vmadmin
+New-SmbShare -Name "eShopPub" -Path "C:\eShopPub" -FullAccess $env:computername"\vmadmin"
+
+# Run MSbuild to publish files to folder
+$eShopPath = "C:\eshoponweb\eShopOnWeb-master\src\Web"
+$proc = (Start-Process -FilePath "C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\MSBuild\15.0\Bin\MSBuild.exe" -ArgumentList ('/p:WebPublishMethod=FileSystem','/p:PublishProvider=FileSystem','/p:LastUsedBuildConfiguration=Release','/p:LaunchSiteAfterPublish=False','/p:ExcludeApp_Data=False','/p:TargetFramework=netcoreapp2.1','/p:SelfContained=false','/p:_IsPortable=true','/p:publishUrl=C:\eShopPub','/p:DeleteExistingFiles=False','/p:DeployOnBuild=True') -WorkingDirectory $eShopPath -Passthru)
+$proc | Wait-Process
 

@@ -749,7 +749,8 @@
         "apiVersion": "2017-03-30",
         "location": "[parameters('location')]",
         "dependsOn": [
-            "[concat('Microsoft.Network/loadBalancers/', variables('webLbName'))]"
+            "[concat('Microsoft.Network/loadBalancers/', variables('webLbName'))]",
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VisualStudioSrvName'))]"
         ],
         "sku": {
             "name": "[parameters('webSrvVMSize')]",
