@@ -23,4 +23,4 @@ Get-AzureRmKeyVault -VaultName $MonitoringHackVaultName | Select-Object VaultNam
 #Step 6: Run deployment below after updating the paths for the template file and parameterfile.  Make sure to update the paths to the json files or run the command from the same directory
 #Note: This will deploy VMs using B series VMs.  By default a subscription is limited to 10 cores of B Series per region.  You may have to request more cores or
 # choice another region if you run into quota errors on your deployment.  Also feel free to modify the ARM template to use a different VM Series.
-New-AzureRmResourceGroupDeployment -Name $MonitoringHackName -ResourceGroupName $MonitoringHackName -TemplateFile '.\azuredeploy.json' -TemplateParameterFile '.\azuredeploy.parameters.json'
+New-AzureRmResourceGroupDeployment -Name $MonitoringHackName -ResourceGroupName $MonitoringHackName -TemplateFile '.\VMSSazuredeploy.json' -TemplateParameterFile '.\azuredeploy.parameters.json'
