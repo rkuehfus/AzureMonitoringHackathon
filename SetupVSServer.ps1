@@ -82,9 +82,10 @@ $proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('ef','database','update
 $proc | Wait-Process
 
 # Build Project and publish to a folder
-# Share folder to vmadmin
+# Share folder to vmadmin and SYSTEM
 New-Item -ItemType directory -Path C:\eShopPub
 New-SmbShare -Name "eShopPub" -Path "C:\eShopPub" -FullAccess $env:computername"\vmadmin"
+Grant-SmbShareAccess -Name "eShopPub" -AccountName SYSTEM -AccessRight Full -Force
 
 #Download nuget.exe
 $exeFilenugetTemp = [System.IO.Path]::GetTempPath().ToString() + "nuget.exe"
@@ -98,9 +99,7 @@ $eShopPath = "C:\eshoponweb\eShopOnWeb-master"
 $proc = (Start-Process -FilePath $exeFilenuget.ToString() -ArgumentList ('restore','C:\eshoponweb\eShopOnWeb-master\eShopOnWeb.sln') -WorkingDirectory $eShopPath -Passthru)
 $proc | Wait-Process
 
-
 # Run MSbuild to publish files to folder
 $eShopWebPath = "C:\eshoponweb\eShopOnWeb-master\src\Web"
 $proc = (Start-Process -FilePath "C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\MSBuild\15.0\Bin\MSBuild.exe" -ArgumentList ('/p:WebPublishMethod=FileSystem','/p:PublishProvider=FileSystem','/p:LastUsedBuildConfiguration=Release','/p:LaunchSiteAfterPublish=False','/p:ExcludeApp_Data=False','/p:TargetFramework=netcoreapp2.1','/p:SelfContained=false','/p:_IsPortable=true','/p:publishUrl=C:\eShopPub','/p:DeleteExistingFiles=False','/p:DeployOnBuild=True') -WorkingDirectory $eShopWebPath -Passthru)
 $proc | Wait-Process
-
