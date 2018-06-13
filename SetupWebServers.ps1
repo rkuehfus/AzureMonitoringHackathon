@@ -1,3 +1,7 @@
+param (
+    [string]$VSServerName
+)
+
 # Install IIS (with Management Console)
 Install-WindowsFeature -name Web-Server -IncludeManagementTools
 
@@ -46,3 +50,10 @@ $UserKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8
 Set-ItemProperty -Path $AdminKey -Name "IsInstalled" -Value 0 -Force
 Set-ItemProperty -Path $UserKey -Name "IsInstalled" -Value 0 -Force
 Stop-Process -Name Explorer -Force
+
+# Copy eShoponWeb from Published Share and restart IIS
+$SharePath = "\\" + $VSServerName + "\eShopPub"
+New-PSDrive -Name "V" -PSProvider "FileSystem" -Root $SharePath
+
+Copy-Item "V:\*.*" -Destination "C:\inetpub\wwwroot\" -Recurse -Force
+Copy-Item "V:\wwwroot\" -Destination C:\inetpub\wwwroot\wwwroot -Recurse -Force
