@@ -86,6 +86,7 @@ $proc | Wait-Process
 New-Item -ItemType directory -Path C:\eShopPub
 New-SmbShare -Name "eShopPub" -Path "C:\eShopPub" -FullAccess $env:computername"\vmadmin"
 Grant-SmbShareAccess -Name "eShopPub" -AccountName SYSTEM -AccessRight Full -Force
+Grant-SmbShareAccess -Name "eShopPub" -AccountName Everyone -AccessRight Full -Force
 
 #Download nuget.exe
 $exeFilenugetTemp = [System.IO.Path]::GetTempPath().ToString() + "nuget.exe"
