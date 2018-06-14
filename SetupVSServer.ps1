@@ -68,17 +68,22 @@ $NewContent = @()
 $NewContent | Out-File $ManageControllerfile -Force
 
 #Configure eShoponWeb application
-# Run dotnet with arguments
-$eShopWebDestination = "C:\eshoponweb\eShopOnWeb-master\src\Web"
-$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('restore') -WorkingDirectory $eShopWebDestination -Passthru)
+# Run dotnet restore with arguments
+$eShopSolDestination = "C:\eshoponweb\eShopOnWeb-master"
+$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('restore') -WorkingDirectory $eShopSolDestination -Passthru)
 $proc | Wait-Process
 
 #Configure CatalogDb
+$eShopWebDestination = "C:\eshoponweb\eShopOnWeb-master\src\Web"
 $proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('ef','database','update','-c','catalogcontext','-p','../Infrastructure/Infrastructure.csproj','-s','Web.csproj') -WorkingDirectory $eShopWebDestination -Passthru)
 $proc | Wait-Process
 
 #Configure Identity Db
 $proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('ef','database','update','-c','appidentitydbcontext','-p','../Infrastructure/Infrastructure.csproj','-s','Web.csproj') -WorkingDirectory $eShopWebDestination -Passthru)
+$proc | Wait-Process
+
+#Run dotnet build
+$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('build') -WorkingDirectory $eShopWebDestination -Passthru)
 $proc | Wait-Process
 
 # Build Project and publish to a folder
@@ -89,16 +94,16 @@ Grant-SmbShareAccess -Name "eShopPub" -AccountName SYSTEM -AccessRight Full -For
 Grant-SmbShareAccess -Name "eShopPub" -AccountName Everyone -AccessRight Full -Force
 
 #Download nuget.exe
-$exeFilenugetTemp = [System.IO.Path]::GetTempPath().ToString() + "nuget.exe"
-if (Test-Path $exeFilenugetTemp) { Remove-Item $exeFilenugetTemp -Force }
-$exeFilenuget = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName "nuget.exe" -PassThru
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile $exeFilenuget
+#$exeFilenugetTemp = [System.IO.Path]::GetTempPath().ToString() + "nuget.exe"
+#if (Test-Path $exeFilenugetTemp) { Remove-Item $exeFilenugetTemp -Force }
+#$exeFilenuget = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName "nuget.exe" -PassThru
+#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+#Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile $exeFilenuget
 
 #Update eShoponWeb Solution with latest dependences
-$eShopPath = "C:\eshoponweb\eShopOnWeb-master"
-$proc = (Start-Process -FilePath C:\Windows\Temp\nuget.exe -ArgumentList ('restore','C:\eshoponweb\eShopOnWeb-master\eShopOnWeb.sln') -WorkingDirectory $eShopPath -Passthru)
-$proc | Wait-Process
+#$eShopPath = "C:\eshoponweb\eShopOnWeb-master"
+#$proc = (Start-Process -FilePath C:\Windows\Temp\nuget.exe -ArgumentList ('restore','C:\eshoponweb\eShopOnWeb-master\eShopOnWeb.sln') -WorkingDirectory $eShopPath -Passthru)
+#$proc | Wait-Process
 
 # Run MSbuild to publish files to folder
 $eShopWebPath = "C:\eshoponweb\eShopOnWeb-master\src\Web"
