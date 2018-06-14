@@ -69,7 +69,7 @@ $NewContent | Out-File $ManageControllerfile -Force
 
 #Configure eShoponWeb application
 # Run dotnet restore with arguments
-$eShopSolDestination = "C:\eshoponweb\eShopOnWeb-master"
+$eShopSolDestination = "C:\eshoponweb\eShopOnWeb-master\src\Web"
 $proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('restore') -WorkingDirectory $eShopSolDestination -Passthru)
 $proc | Wait-Process
 
