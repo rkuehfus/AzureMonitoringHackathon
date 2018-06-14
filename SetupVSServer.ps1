@@ -97,7 +97,7 @@ Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.
 
 #Update eShoponWeb Solution with latest dependences
 $eShopPath = "C:\eshoponweb\eShopOnWeb-master"
-$proc = (Start-Process -FilePath $exeFilenuget.ToString() -ArgumentList ('restore','C:\eshoponweb\eShopOnWeb-master\eShopOnWeb.sln') -WorkingDirectory $eShopPath -Passthru)
+$proc = (Start-Process -FilePath C:\Windows\Temp\nuget.exe -ArgumentList ('restore','C:\eshoponweb\eShopOnWeb-master\eShopOnWeb.sln') -WorkingDirectory $eShopPath -Passthru)
 $proc | Wait-Process
 
 # Run MSbuild to publish files to folder
