@@ -93,19 +93,7 @@ New-SmbShare -Name "eShopPub" -Path "C:\eShopPub" -FullAccess $env:computername"
 Grant-SmbShareAccess -Name "eShopPub" -AccountName SYSTEM -AccessRight Full -Force
 Grant-SmbShareAccess -Name "eShopPub" -AccountName Everyone -AccessRight Full -Force
 
-#Download nuget.exe
-#$exeFilenugetTemp = [System.IO.Path]::GetTempPath().ToString() + "nuget.exe"
-#if (Test-Path $exeFilenugetTemp) { Remove-Item $exeFilenugetTemp -Force }
-#$exeFilenuget = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName "nuget.exe" -PassThru
-#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-#Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile $exeFilenuget
-
-#Update eShoponWeb Solution with latest dependences
-#$eShopPath = "C:\eshoponweb\eShopOnWeb-master"
-#$proc = (Start-Process -FilePath C:\Windows\Temp\nuget.exe -ArgumentList ('restore','C:\eshoponweb\eShopOnWeb-master\eShopOnWeb.sln') -WorkingDirectory $eShopPath -Passthru)
-#$proc | Wait-Process
-
-# Run MSbuild to publish files to folder
-$eShopWebPath = "C:\eshoponweb\eShopOnWeb-master\src\Web"
-$proc = (Start-Process -FilePath "C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\MSBuild\15.0\Bin\MSBuild.exe" -ArgumentList ('/p:WebPublishMethod=FileSystem','/p:PublishProvider=FileSystem','/p:LastUsedBuildConfiguration=Release','/p:LaunchSiteAfterPublish=False','/p:ExcludeApp_Data=False','/p:TargetFramework=netcoreapp2.1','/p:SelfContained=false','/p:_IsPortable=true','/p:publishUrl=C:\eShopPub','/p:DeleteExistingFiles=False','/p:DeployOnBuild=True') -WorkingDirectory $eShopWebPath -Passthru)
+# Run dotnet publish to to publish files to our share created above
+$eShopWebDestination = "C:\eshoponweb\eShopOnWeb-master\src\Web"
+$proc = (Start-Process -FilePath 'C:\Program Files\dotnet\dotnet.exe' -ArgumentList ('publish','--output','C:\eShopPub') -WorkingDirectory $eShopWebDestination -Passthru -RedirectStandardOutput "c:\windows\temp\dotnetpuboutput.txt")
 $proc | Wait-Process
