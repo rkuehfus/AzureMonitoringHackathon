@@ -70,20 +70,20 @@ $NewContent | Out-File $ManageControllerfile -Force
 #Configure eShoponWeb application
 # Run dotnet restore with arguments
 $eShopWebDestination = "C:\eshoponweb\eShopOnWeb-master\src\Web"
-$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('restore') -WorkingDirectory $eShopWebDestination -Passthru)
+$proc = (Start-Process -FilePath 'C:\Program Files\dotnet\dotnet.exe' -ArgumentList ('restore') -WorkingDirectory $eShopWebDestination -Passthru)
 $proc | Wait-Process
 
 #Configure CatalogDb
 
-$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('ef','database','update','-c','catalogcontext','-p','../Infrastructure/Infrastructure.csproj','-s','Web.csproj') -WorkingDirectory $eShopWebDestination -Passthru)
+$proc = (Start-Process -FilePath 'C:\Program Files\dotnet\dotnet.exe' -ArgumentList ('ef','database','update','-c','catalogcontext','-p','../Infrastructure/Infrastructure.csproj','-s','Web.csproj') -WorkingDirectory $eShopWebDestination -Passthru)
 $proc | Wait-Process
 
 #Configure Identity Db
-$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('ef','database','update','-c','appidentitydbcontext','-p','../Infrastructure/Infrastructure.csproj','-s','Web.csproj') -WorkingDirectory $eShopWebDestination -Passthru)
+$proc = (Start-Process -FilePath 'C:\Program Files\dotnet\dotnet.exe' -ArgumentList ('ef','database','update','-c','appidentitydbcontext','-p','../Infrastructure/Infrastructure.csproj','-s','Web.csproj') -WorkingDirectory $eShopWebDestination -Passthru)
 $proc | Wait-Process
 
 #Run dotnet build
-$proc = (Start-Process -FilePath 'dotnet' -ArgumentList ('build') -WorkingDirectory $eShopWebDestination -Passthru)
+$proc = (Start-Process -FilePath 'C:\Program Files\dotnet\dotnet.exe' -ArgumentList ('build') -WorkingDirectory $eShopWebDestination -Passthru)
 $proc | Wait-Process
 
 # Build Project and publish to a folder
