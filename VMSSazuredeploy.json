@@ -590,7 +590,8 @@
         "dependsOn": [
             "[concat('Microsoft.Network/networkInterfaces/', variables('VisualStudioNicName'))]",
             "[concat('Microsoft.Network/publicIPAddresses/', variables('VisualStudioPublicIP'))]",
-            "[concat('Microsoft.Compute/virtualMachines/', parameters('envPrefixName'), 'sqlSrv16')]"
+            "[concat('Microsoft.Compute/virtualMachines/', parameters('envPrefixName'), 'sqlSrv16')]",
+            "[concat('Microsoft.Compute/virtualMachines/extensions/', parameters('envPrefixName'), 'sqlSrv16/SqlIaasExtension')]"
         ],
         "tags": {
             "displayName": "VSSrv"

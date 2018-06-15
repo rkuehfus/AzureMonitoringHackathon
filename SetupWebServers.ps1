@@ -41,8 +41,7 @@ Invoke-WebRequest -Uri "https://download.microsoft.com/download/9/1/7/917308D9-6
 # Run the exe with arguments
 $proc = (Start-Process -FilePath $exeFileNetCore.Name.ToString() -ArgumentList ('/install','/quiet') -WorkingDirectory $exeFileNetCore.Directory.ToString() -Passthru)
 $proc | Wait-Process
-#Restart iis
-Start-Process -FilePath C:\Windows\System32\iisreset.exe -ArgumentList /RESTART 
+
 
 # Disable Internet Explorer Enhanced Security Configuration
 $AdminKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}"
@@ -57,3 +56,6 @@ New-PSDrive -Name "V" -PSProvider "FileSystem" -Root $SharePath
 
 Copy-Item "V:\*.*" -Destination "C:\inetpub\wwwroot\" -Recurse -Force
 Copy-Item "V:\wwwroot\" -Destination C:\inetpub\wwwroot\wwwroot -Recurse -Force
+
+#Restart iis
+Start-Process -FilePath C:\Windows\System32\iisreset.exe -ArgumentList /RESTART 
