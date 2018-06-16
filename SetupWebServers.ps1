@@ -51,11 +51,18 @@ Set-ItemProperty -Path $UserKey -Name "IsInstalled" -Value 0 -Force
 Stop-Process -Name Explorer -Force
 
 # Copy eShoponWeb from Published Share and restart IIS
-$SharePath = "\\" + $VSServerName + "\eShopPub"
-New-PSDrive -Name "V" -PSProvider "FileSystem" -Root $SharePath
+$SharePath = '\\'+$VSServerName+'\eShopPub'
 
-Copy-Item "V:\*.*" -Destination "C:\inetpub\wwwroot\" -Recurse -Force
-Copy-Item "V:\wwwroot\" -Destination C:\inetpub\wwwroot\wwwroot -Recurse -Force
+if (Test-Path $SharePath){
+    New-PSDrive -Name "V" -PSProvider "FileSystem" -Root $SharePath >> c:\windows\temp\SetupWebServers.log
+
+    Copy-Item "V:\*.*" -Destination "C:\inetpub\wwwroot\" -Recurse -Force >> c:\windows\temp\SetupWebServers.log
+    Copy-Item "V:\wwwroot\" -Destination C:\inetpub\wwwroot\wwwroot -Recurse -Force >> c:\windows\temp\SetupWebServers.log
+}
+else {
+    write-output "eShopPub Share was not found: " $SharePath >> c:\windows\temp\SetupWebServers.log
+}
+
 
 #Restart iis
-Start-Process -FilePath C:\Windows\System32\iisreset.exe -ArgumentList /RESTART 
+Start-Process -FilePath C:\Windows\System32\iisreset.exe -ArgumentList /RESTART >> c:\windows\temp\SetupWebServers.log

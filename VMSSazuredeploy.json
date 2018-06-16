@@ -590,7 +590,7 @@
             "[concat('Microsoft.Network/networkInterfaces/', variables('VisualStudioNicName'))]",
             "[concat('Microsoft.Network/publicIPAddresses/', variables('VisualStudioPublicIP'))]",
             "[concat('Microsoft.Compute/virtualMachines/', parameters('envPrefixName'), 'sqlSrv16')]",
-            "[concat('Microsoft.Compute/virtualMachines/extensions/', parameters('envPrefixName'), 'sqlSrv16/SqlIaasExtension')]"
+            "[resourceId('Microsoft.Compute/virtualMachines/extensions/', variables('sqlSrvDBName'), 'SqlIaasExtension')]"
         ],
         "tags": {
             "displayName": "VSSrv"
@@ -631,7 +631,7 @@
         "resources": [ 
             { 
                        "type": "extensions", 
-                       "name": "[concat(parameters('envPrefixName'), 'VSSrv17/CustomScriptExtension')]", 
+                       "name": "[concat(parameters('envPrefixName'), 'VSSrv17CustomScriptExtension')]", 
                        "apiVersion": "2017-03-30", 
                        "location": "[resourceGroup().location]", 
                        "dependsOn": [ 
@@ -751,7 +751,7 @@
         "dependsOn": [
             "[concat('Microsoft.Network/loadBalancers/', variables('webLbName'))]",
             "[concat('Microsoft.Compute/virtualMachines/', variables('VisualStudioSrvName'))]",
-            "[concat(parameters('envPrefixName'), 'VSSrv17/CustomScriptExtension')]"
+            "[concat(parameters('envPrefixName'), 'VSSrv17CustomScriptExtension')]"
         ],
         "sku": {
             "name": "[parameters('webSrvVMSize')]",
