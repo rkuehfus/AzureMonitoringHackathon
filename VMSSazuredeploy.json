@@ -223,7 +223,6 @@
       "webSrvVMSize": "[parameters('webSrvVMSize')]",
       "webSrvSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), 'FESubnetName')]",
       "webSrvPublicIP": "[concat(parameters('envPrefixName'), 'websrvpip')]",
-      "webSrvNumbOfInstances": "[parameters('numberOfWebSrvs')]",
       "webSrvDnsNameforLBIP": "[concat(toLower(variables('vmssName')), 'lb')]",
       "webLbName": "[concat(variables('vmssName'), 'lb')]",
       "webLblb_PIP_Id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('webSrvPublicIP'))]",
@@ -632,7 +631,7 @@
         "resources": [ 
             { 
                        "type": "extensions", 
-                       "name": "CustomScriptExtension", 
+                       "name": "[concat(parameters('envPrefixName'), 'VSSrv17/CustomScriptExtension')]", 
                        "apiVersion": "2017-03-30", 
                        "location": "[resourceGroup().location]", 
                        "dependsOn": [ 
@@ -751,7 +750,8 @@
         "location": "[parameters('location')]",
         "dependsOn": [
             "[concat('Microsoft.Network/loadBalancers/', variables('webLbName'))]",
-            "[concat('Microsoft.Compute/virtualMachines/', variables('VisualStudioSrvName'))]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VisualStudioSrvName'))]",
+            "[concat(parameters('envPrefixName'), 'VSSrv17/CustomScriptExtension')]"
         ],
         "sku": {
             "name": "[parameters('webSrvVMSize')]",
@@ -1143,6 +1143,10 @@
     "username": {
         "type": "string",
         "value": "[parameters('username')]"
+    },
+    "VisualStudioServerName":{
+        "type": "string",
+        "value": "[variables('VisualStudioSrvName')]"
     },
     "vmssServerFirstIPConfig": {
           "type": "string",
