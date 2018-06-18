@@ -18,7 +18,7 @@
 
 ### 3. Access to a machine with Visual Studio Code and the Azure PowerShell Modules loaded.  VS Code ARM and PowerShell extensions should be configured.
 
-![alt text](https://raw.githubusercontent.com/rkuehfus/AzureMonitoringHackathon/monitoringhackdiagram.png)
+![alt text](https://raw.githubusercontent.com/rkuehfus/AzureMonitoringHackathon/master/monitoringhackdiagram.png)
 
 # Agenda
 
