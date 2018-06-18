@@ -826,7 +826,7 @@
                                 "fileUris": [ 
                                   "https://raw.githubusercontent.com/rkuehfus/AzureMonitoringHackathon/master/SetupWebServers.ps1" 
                                 ], 
-                                "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File SetupWebServers.ps1 ',variables('VisualStudioSrvName'))]"  
+                                "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File SetupWebServers.ps1 ',variables('VisualStudioSrvName'), ' ', parameters('username'), ' ', parameters('password'))]"  
                               } 
                             } 
                           },

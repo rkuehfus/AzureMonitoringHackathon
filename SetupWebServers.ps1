@@ -1,5 +1,7 @@
 param (
-    [string]$VSServerName
+    [string]$VSServerName,
+    [string]$username,
+    [string]$password
 )
 
 # Install IIS (with Management Console)
@@ -52,16 +54,17 @@ Stop-Process -Name Explorer -Force
 
 # Copy eShoponWeb from Published Share and restart IIS
 $SharePath = '\\'+$VSServerName+'\eShopPub'
+New-SmbMapping -LocalPath v: -RemotePath $SharePath -UserName $username -Password $password >> c:\windows\temp\SetupWebServers.log
+Copy-Item "V:\*.*" -Destination "C:\inetpub\wwwroot\" -Recurse -Force >> c:\windows\temp\SetupWebServers.log
+Copy-Item "V:\wwwroot\" -Destination C:\inetpub\wwwroot\wwwroot -Recurse -Force >> c:\windows\temp\SetupWebServers.log
 
-if (Test-Path $SharePath){
-    New-PSDrive -Name "V" -PSProvider "FileSystem" -Root $SharePath >> c:\windows\temp\SetupWebServers.log
-
-    Copy-Item "V:\*.*" -Destination "C:\inetpub\wwwroot\" -Recurse -Force >> c:\windows\temp\SetupWebServers.log
-    Copy-Item "V:\wwwroot\" -Destination C:\inetpub\wwwroot\wwwroot -Recurse -Force >> c:\windows\temp\SetupWebServers.log
-}
-else {
-    write-output "eShopPub Share was not found: " $SharePath >> c:\windows\temp\SetupWebServers.log
-}
+#if (Test-Path $SharePath){
+#    Copy-Item "V:\*.*" -Destination "C:\inetpub\wwwroot\" -Recurse -Force >> c:\windows\temp\SetupWebServers.log
+#    Copy-Item "V:\wwwroot\" -Destination C:\inetpub\wwwroot\wwwroot -Recurse -Force >> c:\windows\temp\SetupWebServers.log
+#}
+#else {
+#    write-output "eShopPub Share was not found: " $SharePath >> c:\windows\temp\SetupWebServers.log
+#}
 
 
 #Restart iis
