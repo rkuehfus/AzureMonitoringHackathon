@@ -58,14 +58,6 @@ New-SmbMapping -LocalPath v: -RemotePath $SharePath -UserName $username -Passwor
 Copy-Item "V:\*.*" -Destination "C:\inetpub\wwwroot\" -Recurse -Force >> c:\windows\temp\SetupWebServers.log
 Copy-Item "V:\wwwroot\" -Destination C:\inetpub\wwwroot\wwwroot -Recurse -Force >> c:\windows\temp\SetupWebServers.log
 
-#if (Test-Path $SharePath){
-#    Copy-Item "V:\*.*" -Destination "C:\inetpub\wwwroot\" -Recurse -Force >> c:\windows\temp\SetupWebServers.log
-#    Copy-Item "V:\wwwroot\" -Destination C:\inetpub\wwwroot\wwwroot -Recurse -Force >> c:\windows\temp\SetupWebServers.log
-#}
-#else {
-#    write-output "eShopPub Share was not found: " $SharePath >> c:\windows\temp\SetupWebServers.log
-#}
-
 
 #Restart iis
 Start-Process -FilePath C:\Windows\System32\iisreset.exe -ArgumentList /RESTART >> c:\windows\temp\SetupWebServers.log
