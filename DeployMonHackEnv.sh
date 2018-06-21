@@ -18,7 +18,8 @@ declare monitoringHackVaultName="$monitoringHackName$vaultSuffix"
 az keyvault create --name $monitoringHackVaultName -g $monitoringHackName -l $location --enabled-for-template-deployment true
 
 #Step 4: Add password as a secret.  Use a password that meets the azure pwd police like P@ssw0rd123!!
-az keyvault secret set --vault-name $monitoringHackVaultName --name 'VMPassword' --value 'YOURPASSWORDHERE'
+read -s -p "Password for your VMs: " PASSWORD
+az keyvault secret set --vault-name $monitoringHackVaultName --name 'VMPassword' --value $PASSWORD
 
 #Step 5: Update azuredeploy.parameters.json file with your envPrefixName and Key Vault resourceID Example --> /subscriptions/{guid}/resourceGroups/{group-name}/providers/Microsoft.KeyVault/vaults/{vault-name}
 # Hint: Run the following line of code to retrieve the resourceID so you can cut and paste from the terminal into your parameters file!
