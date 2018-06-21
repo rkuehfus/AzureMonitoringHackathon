@@ -27,12 +27,13 @@
           "type": "string",
           "allowedValues": [
               "Standard_B2ms",
-              "Standard_B4ms"
+              "Standard_B4ms",
+              "Standard_DS3_v2"
           ],
           "metadata": {
               "description": "The size of the Web Server VMs Created"
           },
-          "defaultValue": "Standard_B2ms"
+          "defaultValue": "Standard_DS3_v2"
       },
       "numberOfWebSrvs": {
           "type": "int",
@@ -92,43 +93,45 @@
             "metadata":{
                 "description" : "Scale In interval"
                 },
-            "DefaultValue": "1"
+            "defaultValue": "1"
         },
         "scaleOutCPUPercentageThreshold": {
             "type": "string",
             "metadata":{
                 "description" : "CPU Threshold for scale Out"
                 },
-            "DefaultValue": "75"
+            "defaultValue": "75"
         },
         "scaleOutInterval": {
             "type": "string",
             "metadata":{
                 "description" : "Scale Out Interval"
                 },
-            "DefaultValue": "1"
+            "defaultValue": "1"
         },
       "sqlVMSize": {
           "type": "string",
           "allowedValues": [
             "Standard_B2ms",
-            "Standard_B4ms"
+            "Standard_B4ms",
+            "Standard_DS3_v2"
         ],
           "metadata": {
               "description": "The size of the SQL VM Created"
           },
-          "defaultValue": "Standard_B2ms"
+          "defaultValue": "Standard_DS3_v2"
       },
       "VisualStudioVMSize": {
         "type": "string",
         "allowedValues": [
           "Standard_B2ms",
-          "Standard_B4ms"
+          "Standard_B4ms",
+          "Standard_DS3_v2"
       ],
         "metadata": {
             "description": "The size of the Visual Studio VM Created"
         },
-        "defaultValue": "Standard_B2ms"
+        "defaultValue": "Standard_DS3_v2"
     },
       "diskType": {
           "type": "string",
