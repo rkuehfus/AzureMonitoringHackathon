@@ -34,8 +34,8 @@ $proc = (Start-Process -file msiexec -arg $arguments -Passthru)
 $proc | Wait-Process
 Get-Content $logFile
 
-# Install Microsoft .Net Core 2.1.0
-$exeDotNetTemp = [System.IO.Path]::GetTempPath().ToString() + "dotnet-hosting-2.1.0-win.exe"
+# Install Microsoft .Net Core 2.1.3
+$exeDotNetTemp = [System.IO.Path]::GetTempPath().ToString() + "dotnet-hosting-2.1.3-win.exe"
 if (Test-Path $exeDotNetTemp) { Remove-Item $exeDotNetTemp -Force }
 # Download file from Microsoft Downloads and save to local temp file (%LocalAppData%/Temp/2)
 $exeFileNetCore = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName "dotnet-hosting-2.1.3-win.exe" -PassThru
