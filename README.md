@@ -2,7 +2,7 @@
 
 ## Overview
 
-### This challenged based Azure Monitoring Hackathon is intended to teach you how to monitor Azure workloads. During these three days you will be working Azure Monitor and Alerting, Log Analytics and Application Insights.
+### This challenged based Azure Monitoring Hackathon is intended to teach how to monitor Azure workloads. During these three days you will be working Azure Monitor, Log Analytics and Application Insights.
 
 ## Goals
 
@@ -26,41 +26,51 @@
 
 ### 9 – 9:30 AM: Kickoff & Introductions
 
-### 9:30  - 11 AM: Azure Monitoring Briefing on Azure Monitor and Alerts, Log Analytics and Application Insights
+### 9:30  - 10:30 AM: Deploy Lab
 
-### 11 am - Noon: Setup Infrastructure (PowerShell (or Azure CLI) and ARM template)
+### 10:30 - 10:45 AM: Break
+
+### 10:45  - Noon: Azure Security & Management and Monitor Overviews
 
 ### Noon – 1 PM: Lunch
 
-### 1 – 3 PM: Azure Monitor and Alerting Challenges
+### 1 – 3 PM: Monitor and Alert Rule Challenges begin
 
 ### 3 – 3:15 PM: Break
 
-### 3:15 – 5 PM: Log Analytics Challenges begins
+### 3:15 – 5 PM: Monitor and Alert Rule Automation Challenges begins
 
 ## Day 2
 
 ### 9 – 9:30 AM: Team Sync up (what did you learn from Day 1?, how did it go?, blocked?)
 
-### 9:30  - Noon: Log Analytics Challenges Starts\Continues
+### 9:30  - 10:15 AM: Log Analytics Overview
+
+### 10:15 - 10:30 AM: Break
+
+### 10:30 - Noon: Log Analytics Challenges Start
 
 ### Noon – 1 PM: Lunch
 
-### 1  – 3 PM: Log Analytics Solution Challenge begins
+### 1  – 3 PM: Log Analytics Dashboard Challenges Start
 
 ### 3 – 3:15 PM: break
 
-### 3:15 – 5 PM: Setup eShopOnWeb Application in VS
+### 3:15 – 5 PM: Log Analytics Challanges (complete)
 
 ## Day 3
 
 ### 9 – 9:30 AM: Team Sync up (what did you learn from Day 2?, how did it go?, blocked?)
 
-### 9:30  - Noon: App Insights Challenges begin
+### 9:30  - 10:15 AM: App Insights Overview
+
+### 10:15 - 10:30 AM: Break
+
+### 10:30 - Noon: App Insights Challenges Start
 
 ### Noon – 1 PM: Lunch
 
-### 1  – 3 PM: Application Insight Challenges Continues 
+### 1  – 3 PM: App Insights Challenges Continues 
 
 ### 3 – 4 PM: Plan & Whiteboard Monitoring for existing Application 
 
