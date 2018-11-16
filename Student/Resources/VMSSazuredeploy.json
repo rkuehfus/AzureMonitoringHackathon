@@ -218,7 +218,7 @@
       "VisualStudioPublicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses', variables('VisualStudioPublicIP'))]",
       "VisualStudioImagePublisher": "MicrosoftVisualStudio",
       "VisualStudioImageOffer": "VisualStudio",
-      "VisualStudioImageSku": "VS-2017-Comm-Latest-Preview-WS2016",
+      "VisualStudioImageSku": "VS-2017-Comm-Latest-WS2016",
       "vmssName": "[concat(parameters('envPrefixName'), 'webScaleSet')]",
       "vmssId": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', variables('vmssName'))]",
       "vmssFirstServerIP": "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('vmssName'), '/virtualMachines/0/networkInterfaces/', variables('vmssName') ,'Nic')]",
@@ -643,7 +643,7 @@
                        "properties": { 
                          "publisher": "Microsoft.Compute", 
                          "type": "CustomScriptExtension", 
-                         "typeHandlerVersion": "1.8", 
+                         "typeHandlerVersion": "1.9", 
                          "autoUpgradeMinorVersion": true, 
                          "settings": { 
                            "fileUris": [ 
@@ -823,7 +823,7 @@
                             "properties": { 
                               "publisher": "Microsoft.Compute", 
                               "type": "CustomScriptExtension", 
-                              "typeHandlerVersion": "1.8", 
+                              "typeHandlerVersion": "1.9", 
                               "autoUpgradeMinorVersion": true, 
                               "settings": { 
                                 "fileUris": [ 
