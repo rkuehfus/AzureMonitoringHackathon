@@ -1169,6 +1169,10 @@
         "vmssServerFirstIPConfig": {
             "type": "string",
             "value": "[reference(variables('vmssFirstServerIP'),'2017-03-30').ipConfigurations[0].properties.privateIPAddress]"
+        },
+        "ScaleSetPIPDNSname": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('webSrvPublicIP')), '2015-06-15').dnsSettings.fqdn]"
         }
     }
 }
