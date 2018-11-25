@@ -4,7 +4,7 @@
 
 ### This challenged based Azure Monitoring Hackathon is intended to teach how to monitor Azure workloads. During these three days you will be working Azure Monitor, Log Analytics and Application Insights.
 
-[Setup Guide](https://github.com/rkuehfus/AzureMonitoringHackathon/blob/master/Student/Guides/Azure%20Monitoring%20Hackathon%20Deployment%20Guide.docx)
+[Setup Guide](https://github.com/rkuehfus/AzureMonitoringHackathon/raw/master/Student/Guides/Azure%20Monitoring%20Hackathon%20Deployment%20Guide.docx)
 
 ## Goals
 
