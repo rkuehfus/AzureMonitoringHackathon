@@ -6,6 +6,8 @@
 
 [Setup Guide](https://github.com/rkuehfus/AzureMonitoringHackathon/raw/master/Student/Guides/Azure%20Monitoring%20Hackathon%20Deployment%20Guide.docx)
 
+[Proctor's Guide](https://github.com/rkuehfus/AzureMonitoringHackathon/blob/master/Host/Guides/Azure%20Monitoring%20Hackathon%20Proctor%20Guide.docx?raw=true)
+
 ## Goals
 
 ### 1. Build attendees technical skills on Monitoring workloads in Azure
