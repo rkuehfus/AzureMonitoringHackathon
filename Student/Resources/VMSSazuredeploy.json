@@ -347,20 +347,6 @@
                             "priority": 121,
                             "direction": "Inbound"
                         }
-                    },
-                    {
-                        "name": "Block_Internet",
-                        "properties": {
-                            "description": "Block Internet",
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "Internet",
-                            "access": "Deny",
-                            "priority": 200,
-                            "direction": "Outbound"
-                        }
                     }
                 ]
             }
@@ -451,6 +437,9 @@
             "type": "Microsoft.Compute/virtualMachines",
             "location": "[parameters('location')]",
             "apiVersion": "2017-03-30",
+            "identity": {  
+                "type": "SystemAssigned" 
+                },             
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('sqlSrvDBNicName'))]",
                 "[concat('Microsoft.Network/publicIPAddresses/', variables('sqlPublicIP'))]"
@@ -489,6 +478,106 @@
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('sqlSrvDBNicName'))]"
                         }
                     ]
+                }
+            },
+            "resources": []
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('envPrefixName'), 'sqlSrv16/WADExtensionSetup')]",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('envPrefixName'), 'sqlSrv16')]",
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('envPrefixName'), 'sqlSrv16'),'SqlIaasExtension')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.ManagedIdentity",
+                "type": "ManagedIdentityExtensionForWindows",
+                "typeHandlerVersion": "1.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "port": 50342
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('envPrefixName'), 'sqlSrv16/VMDiagnosticsSettings')]",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('envPrefixName'), 'sqlSrv16')]",
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('envPrefixName'), 'sqlSrv16'),'SqlIaasExtension')]",
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('envPrefixName'), 'sqlSrv16'),'WADExtensionSetup')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Diagnostics",
+                "type": "IaaSDiagnostics",
+                "typeHandlerVersion": "1.12",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "WadCfg": {
+                        "DiagnosticMonitorConfiguration": {
+                            "overallQuotaInMB": 4096,
+                            "DiagnosticInfrastructureLogs": {
+                                "scheduledTransferLogLevelFilter": "Error"
+                            },
+                            "Directories": {
+                                "scheduledTransferPeriod": "PT1M",
+                                "IISLogs": {
+                                    "containerName": "wad-iis-logfiles"
+                                },
+                                "FailedRequestLogs": {
+                                    "containerName": "wad-failedrequestlogs"
+                                }
+                            },
+                            "PerformanceCounters": {
+                                "scheduledTransferPeriod": "PT1M",
+                                "sinks": "AzMonSink",
+                                "PerformanceCounterConfiguration": [
+                                    {
+                                        "counterSpecifier": "\\Memory\\Available Bytes",
+                                        "sampleRate": "PT15S"
+                                    },
+                                    {
+                                        "counterSpecifier": "\\Memory\\% Committed Bytes In Use",
+                                        "sampleRate": "PT15S"
+                                    },
+                                    {
+                                        "counterSpecifier": "\\Memory\\Committed Bytes",
+                                        "sampleRate": "PT15S"
+                                    }
+                                ]
+                            },
+                            "WindowsEventLog": {
+                                "scheduledTransferPeriod": "PT1M",
+                                "DataSource": [
+                                    {
+                                        "name": "Application!*"
+                                    }
+                                ]
+                            },
+                            "Logs": {
+                                "scheduledTransferPeriod": "PT1M",
+                                "scheduledTransferLogLevelFilter": "Error"
+                            }
+                        },
+                        "SinksConfig": {
+                            "Sink": [
+                                {
+                                    "name": "AzMonSink",
+                                    "AzureMonitor": {}
+                                }
+                            ]
+                        }
+                    },
+                    "StorageAccount": "[variables('storageAccountName')]"
+                },
+                "protectedSettings": {
+                    "storageAccountName": "[variables('storageAccountName')]",
+                    "storageAccountKey": "[listKeys(variables('accountid'),'2015-06-15').key1]",
+                    "storageAccountEndPoint": "https://core.windows.net/"
                 }
             }
         },
@@ -635,6 +724,7 @@
                         "type": "CustomScriptExtension",
                         "typeHandlerVersion": "1.9",
                         "autoUpgradeMinorVersion": true,
+                        "forceUpdateTag": "1.0.0",
                         "settings": {
                             "fileUris": [
                                 "https://raw.githubusercontent.com/rkuehfus/AzureMonitoringHackathon/master/Student/Resources/SetupVSServer.ps1"
