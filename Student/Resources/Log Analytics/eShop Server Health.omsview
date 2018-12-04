@@ -63,7 +63,7 @@
                                         "Subtitle": ""
                                     },
                                     "LineChart": {
-                                        "Query": "Perf   | where ObjectName == \"Memory\" and CounterName == \"% Committed Bytes In Use\" and TimeGenerated > ago(4h)  | summarize AVGMEMORY = avg(CounterValue) by bin(TimeGenerated, 5m), Computer",
+                                        "Query": "Perf   | where ObjectName == \"Processor\" and CounterName == \"% Processor Time\" and TimeGenerated > ago(4h)  | summarize AVGPROCESSOR = avg(CounterValue) by bin(TimeGenerated, 5m), Computer",
                                         "Callout": {
                                             "Title": "Avg per 5 mins",
                                             "Series": "",
@@ -72,9 +72,9 @@
                                         "yAxis": {
                                             "isLogarithmic": false,
                                             "units": {
-                                                "baseUnitType": "",
-                                                "baseUnit": "",
-                                                "displayUnit": ""
+                                                "baseUnitType": "Percentage",
+                                                "baseUnit": "ZeroToOne",
+                                                "displayUnit": "ZeroToOne"
                                             },
                                             "customLabel": ""
                                         },
@@ -145,9 +145,9 @@
                                         "yAxis": {
                                             "isLogarithmic": false,
                                             "units": {
-                                                "baseUnitType": "",
-                                                "baseUnit": "",
-                                                "displayUnit": ""
+                                                "baseUnitType": "Percentage",
+                                                "baseUnit": "ZeroToOne",
+                                                "displayUnit": "ZeroToOne"
                                             },
                                             "customLabel": ""
                                         },
@@ -157,7 +157,6 @@
                                         "Query": "Perf   | where ObjectName == \"Memory\" and CounterName == \"% Committed Bytes In Use\" and TimeGenerated > ago(4h)  | summarize AVGMEMORY = avg(CounterValue) by bin(TimeGenerated, 5m), Computer",
                                         "HideGraph": false,
                                         "enableSparklines": true,
-                                        "operation": "Summary",
                                         "ColumnsTitle": {
                                             "Name": "Server",
                                             "Value": "Percent"
