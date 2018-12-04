@@ -514,7 +514,7 @@
             "properties": {
                 "publisher": "Microsoft.Azure.Diagnostics",
                 "type": "IaaSDiagnostics",
-                "typeHandlerVersion": "1.12",
+                "typeHandlerVersion": "1.5",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "WadCfg": {
