@@ -28,4 +28,4 @@ declare job="job.$(date '+%Y%m%d.%H%m')"
 az group deployment create --name $job -g $resourceGroupName --template-file $template --parameters @$para
 
 # Step 5: To check your results - Get metricalerts Rule for Resourcegroup beginning with a name of "CPU"
-az resource list --resource-type 'Microsoft.Insights/metricalerts' -g $resourceGroupName -o json | jq '.[] | select(.name|test("CPU.*"))'
+az resource list --resource-type 'Microsoft.Insights/metricalerts' -g $resourceGroupName -o json | jq '.[] | select(.name|test("^CPU_"))'
