@@ -6,6 +6,8 @@
 
 [Setup Guide](https://github.com/rkuehfus/AzureMonitoringHackathon/raw/master/Student/Guides/Azure%20Monitoring%20Hackathon%20Deployment%20Guide.docx)
 
+[Agenda and Hack Challanges Deck](https://github.com/rkuehfus/AzureMonitoringHackathon/blob/master/Student/Guides/Azure%20Monitoring%20Hackathon%20Deployment%20Guide.docx?raw=true)
+
 [Proctor's Guide](https://github.com/rkuehfus/AzureMonitoringHackathon/blob/master/Host/Guides/Azure%20Monitoring%20Hackathon%20Proctor%20Guide.docx?raw=true)
 
 ## Goals
