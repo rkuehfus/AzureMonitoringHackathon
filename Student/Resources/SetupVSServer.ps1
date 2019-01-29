@@ -9,6 +9,7 @@ if (Test-Path $exeDotNetTemp) { Remove-Item $exeDotNetTemp -Force }
 # Download file from Microsoft Downloads and save to local temp file (%LocalAppData%/Temp/2)
 $exeFileNetCore = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName "dotnet-sdk-2.2.101-win-x64.exe" -PassThru
 Invoke-WebRequest -Uri "https://download.visualstudio.microsoft.com/download/pr/d4592a50-b583-434a-bcda-529e506a7e0d/b1fee3bb02e4d5b831bd6057af67a91b/dotnet-sdk-2.2.101-win-x64.exe" -OutFile $exeFileNetCore
+
 # Run the exe with arguments
 $proc = (Start-Process -FilePath $exeFileNetCore.Name.ToString() -ArgumentList ('/install','/quiet') -WorkingDirectory $exeFileNetCore.Directory.ToString() -Passthru)
 $proc | Wait-Process
